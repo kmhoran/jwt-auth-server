@@ -49,11 +49,24 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IDataRepo, LiteDbDataRepo>();
 builder.Services.AddSingleton<IUserAuthentication, UserAuthentication>();
+string corsPolicy = "_allowAllOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy,
+        policy =>
+        {
+            policy.WithOrigins("*")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCors(corsPolicy);
 
 app.Run();
 

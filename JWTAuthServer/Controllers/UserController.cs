@@ -11,16 +11,22 @@ public class UserController : ControllerBase
 {
     private readonly IDataRepo _dataRepo;
     private readonly IUserAuthentication _userAuthentication;
+    private readonly bool _allowRegistration;
 
     public UserController(IDataRepo dataRepo, IUserAuthentication userAuthentication)
     {
         _dataRepo = dataRepo;
         _userAuthentication = userAuthentication;
+        _allowRegistration = bool.Parse(Environment.GetEnvironmentVariable("ALLOW_REGISTRATION") ?? "false");
     }
 
     [HttpPost("register")]
     public IActionResult Register([FromBody] UserRegistrationRequest request)
     {
+        if (!_allowRegistration)
+        {
+            return Forbid();
+        }
         var existingUser = _dataRepo.GetUser(request.Username);
         if (existingUser != null)
         {

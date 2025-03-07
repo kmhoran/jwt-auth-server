@@ -53,19 +53,22 @@ public class UserControllerTests
     [Fact]
     public void Register_ReturnsOk_WhenUserIsAdded()
     {
+        Environment.SetEnvironmentVariable("ALLOW_REGISTRATION", "true");
         var user = new UserRegistrationRequest {
             Username = "newUser",
             Password = "password"
         };
-
-        var result = _controller.Register(user);
+        UserController registrationController = new UserController(_mockRepo.Object, _mockAuth.Object);
+        var result = registrationController.Register(user);
 
         var okResult = Assert.IsType<OkObjectResult>(result);
+        Environment.SetEnvironmentVariable("ALLOW_REGISTRATION", null);
     }
 
     [Fact]
     public void Register_ReturnsConflict_WhenUserAlreadyExists()
     {
+        Environment.SetEnvironmentVariable("ALLOW_REGISTRATION", "true");
         var user = new User {
             Id = "1",
             Username = "admin",
@@ -81,9 +84,27 @@ public class UserControllerTests
             Password = "password"
         };
 
-        var result = _controller.Register(userRegistrationRequest);
+        UserController registrationController = new UserController(_mockRepo.Object, _mockAuth.Object);
+        var result = registrationController.Register(userRegistrationRequest);
 
         Assert.IsType<ConflictObjectResult>(result);
+        Environment.SetEnvironmentVariable("ALLOW_REGISTRATION", null);
+    }
+
+    [Fact]
+    public void Register_ReturnsForbid_WhenRegistrationNotAllowed()
+    {
+        Environment.SetEnvironmentVariable("ALLOW_REGISTRATION", null);
+        var user = new UserRegistrationRequest {
+            Username = "newUser",
+            Password = "password"
+        };
+
+        UserController registrationController = new UserController(_mockRepo.Object, _mockAuth.Object);
+        var result = registrationController.Register(user);
+
+        var forbidResult = Assert.IsType<ForbidResult>(result);
+        Environment.SetEnvironmentVariable("ALLOW_REGISTRATION", null);
     }
 }
 }
