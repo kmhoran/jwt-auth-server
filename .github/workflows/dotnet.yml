@@ -27,4 +27,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./JWTAuthServer/
     - name: Test
-      run: dotnet test --no-build --verbosity normal ./JWTAuthServer.Tests/
+      run: dotnet test ./JWTAuthServer.Tests/
