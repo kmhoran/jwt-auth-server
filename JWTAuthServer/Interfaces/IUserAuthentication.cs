@@ -1,3 +1,6 @@
+using JWTAuthServer.Models;
+namespace JWTAuthServer.Interfaces
+{
 public interface IUserAuthentication
 {
     User GenerateUser(string username, string password);
@@ -5,4 +8,5 @@ public interface IUserAuthentication
     Session RefreshToken(string username, string refreshToken);
     Session ValidateToken(string username, string token);
     void RevokeToken(string username, string token);
+}
 }

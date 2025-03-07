@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWTAuthServer", "JWTAuthServer.csproj", "{BCF59023-FD33-6B6E-2360-526FEDAB6AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWTAuthServer.Tests", "JWTAuthServer.Tests\JWTAuthServer.Tests.csproj", "{4D7858F5-BF56-42B4-A017-0C0D598ED508}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{BCF59023-FD33-6B6E-2360-526FEDAB6AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCF59023-FD33-6B6E-2360-526FEDAB6AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCF59023-FD33-6B6E-2360-526FEDAB6AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7858F5-BF56-42B4-A017-0C0D598ED508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7858F5-BF56-42B4-A017-0C0D598ED508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7858F5-BF56-42B4-A017-0C0D598ED508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7858F5-BF56-42B4-A017-0C0D598ED508}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

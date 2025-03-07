@@ -1,3 +1,5 @@
+namespace JWTAuthServer.Models
+{
 public class Session
 {
     public string AccessToken { get; set; }
@@ -5,4 +7,5 @@ public class Session
     public string Username { get; set; }
     public DateTime Expiration { get; set; }
     public DateTime RefreshExpiration { get; set; }
+}
 }

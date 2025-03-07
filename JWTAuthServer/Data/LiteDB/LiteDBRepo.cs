@@ -1,5 +1,9 @@
 using LiteDB;
+using JWTAuthServer.Models;
+using JWTAuthServer.Interfaces;
 
+namespace JWTAuthServer.Data
+{
 public class LiteDbDataRepo : IDataRepo
 {
     private readonly string _dbFilePath = @"Resources/Data/UserDatabase.db";
@@ -43,4 +47,12 @@ public class LiteDbDataRepo : IDataRepo
             users.Delete(user.Id);
         }
     }
+
+    public void UpdateLastActive(string username)
+    {
+        User user = GetUser(username);
+        user.LastActive = DateTime.Now;
+        UpdateUser(user);
+    }
+}
 }

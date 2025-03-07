@@ -1,3 +1,5 @@
+namespace JWTAuthServer.Models
+{
 public class User
 {
     public string Id { get; set; }
@@ -6,4 +8,5 @@ public class User
     public string PasswordSalt { get; set; }
     public DateTime Created { get; set; }
     public DateTime LastActive { get; set; }
+}
 }

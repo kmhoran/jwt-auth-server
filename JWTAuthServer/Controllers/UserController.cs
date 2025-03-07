@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using JWTAuthServer.Interfaces;
+using JWTAuthServer.Models;
 
+namespace JWTAuthServer.Controllers
+{
 [ApiController]
 [Route("api/[controller]")]
 public class UserController : ControllerBase
@@ -36,7 +40,7 @@ public class UserController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(user);
+        return Ok(user.ToUserResponse());
     }
 
     // [HttpPut("{username}")]
@@ -64,4 +68,5 @@ public class UserController : ControllerBase
     //     _dataRepo.DeleteUser(username);
     //     return Ok(new { message = "User deleted successfully" });
     // }
+}
 }

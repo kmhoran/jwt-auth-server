@@ -4,7 +4,11 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
+using JWTAuthServer.Interfaces;
+using JWTAuthServer.Models;
 
+namespace JWTAuthServer.Controllers
+{
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
@@ -29,6 +33,17 @@ public class AuthController : ControllerBase
         {
             return Unauthorized(ex.Message);
         }
+        catch (Exception ex)
+        {
+            var errorResponse = new 
+            {
+                error = "Internal Server Error",
+                message = ex.Message,
+                details = ex.StackTrace
+            };
+
+            return new ObjectResult(errorResponse) { StatusCode = 500 };
+        }
     }
 
     [HttpPost("refresh")]
@@ -43,16 +58,22 @@ public class AuthController : ControllerBase
         {
             return Unauthorized(ex.Message);
         }
+        catch (Exception ex)
+        {
+            var errorResponse = new 
+            {
+                error = "Internal Server Error",
+                message = ex.Message,
+                details = ex.StackTrace
+            };
+
+            return new ObjectResult(errorResponse) { StatusCode = 500 };
+        }
     }
 
     [HttpPost("validate")]
     public IActionResult ValidateToken([FromBody] TokenValidationRequest request)
     {
-        if (string.IsNullOrEmpty(request.Token))
-        {
-            return BadRequest("Token is required.");
-        }
-
         try
         {
             var session = _userAuthentication.ValidateToken(request.Username, request.Token);
@@ -74,4 +95,5 @@ public class AuthController : ControllerBase
     }
 
    
+}
 }

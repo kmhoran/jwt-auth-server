@@ -12,7 +12,7 @@ public static class Constants
         get
         {
             string envSecret = Environment.GetEnvironmentVariable("TOKEN_SECRET");
-            return envSecret ?? FallbackTokenSecret;
+            return (envSecret ?? FallbackTokenSecret).PadRight(32, ' ');
         }
     }
 
@@ -35,14 +35,14 @@ public static class Constants
             return envIssuer ?? FallbackIssuer;
         }
     }
-    private const string FallbackAudience = "http://localhost:5000";
+    // private const string FallbackAudience = "http://localhost:5000";
 
-    public static string Audience
-    {
-        get
-        {
-            string envAudience = Environment.GetEnvironmentVariable("AUDIENCE");
-            return envAudience ?? FallbackAudience;
-        }
-    }
+    // public static string Audience
+    // {
+    //     get
+    //     {
+    //         string envAudience = Environment.GetEnvironmentVariable("AUDIENCE");
+    //         return envAudience ?? FallbackAudience;
+    //     }
+    // }
 }

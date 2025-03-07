@@ -3,8 +3,12 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using JWTAuthServer.Interfaces;
+using JWTAuthServer.Models;
 
-public class UserAuthentication : IUserAuthentication
+namespace JWTAuthServer.UserAuth
+{
+    public class UserAuthentication : IUserAuthentication
 {
     private readonly IDataRepo dataRepo;
     private readonly Dictionary<string, Session> _sessions;
@@ -57,6 +61,7 @@ public class UserAuthentication : IUserAuthentication
         };
 
         _sessions[user.Username] = session;
+        dataRepo.UpdateLastActive(user.Username);
         return session;
     }
 
@@ -89,6 +94,7 @@ public class UserAuthentication : IUserAuthentication
                 RefreshExpiration = refreshExpires
             };
         _sessions[username] = session;
+        dataRepo.UpdateLastActive(username);
         return session;
     }
 
@@ -107,11 +113,11 @@ public class UserAuthentication : IUserAuthentication
             var TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidateAudience = true,
+                ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = Constants.Issuer,
-                ValidAudience = Constants.Audience,
+                // ValidAudience = Constants.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
 
@@ -138,7 +144,7 @@ public class UserAuthentication : IUserAuthentication
 
         var tokenOptions = new JwtSecurityToken(
             issuer: Constants.Issuer,
-            audience: Constants.Audience,
+            // audience: Constants.Audience,
             claims: claims,
             expires: expires,
             signingCredentials: signinCredentials
@@ -192,4 +198,5 @@ public class UserAuthentication : IUserAuthentication
             return Convert.ToBase64String(saltBytes);
         }
     }
+}
 }
