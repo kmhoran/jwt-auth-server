@@ -20,9 +20,11 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    - name: List
+      run: ls
     - name: Restore dependencies
-      run: dotnet restore .\JWTAuthServer\
+      run: dotnet restore ./JWTAuthServer/
     - name: Build
-      run: dotnet build --no-restore .\JWTAuthServer\
+      run: dotnet build --no-restore ./JWTAuthServer/
     - name: Test
-      run: dotnet test --no-build --verbosity normal .\JWTAuthServer.Tests\
+      run: dotnet test --no-build --verbosity normal ./JWTAuthServer.Tests/
